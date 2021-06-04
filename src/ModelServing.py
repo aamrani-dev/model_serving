@@ -16,9 +16,7 @@ class ModelServing(ABC):
 	def run_inference(self, data):
 		try:
 			inference_input =  self.preprocessing(data)
-			# print("========================= preprocessing done =====================")		
 			postprocessing_input = self.inference(inference_input)
-			# print("========================= inference done =====================")	
 			return self.postprocessing(postprocessing_input)
 
 		except Exception as e:

@@ -1,8 +1,6 @@
 import sys
 sys.path.insert(0, '/home/amine/model_serving')
-
 import argparse
-from src.triton import triton_inference_engine
 import asyncio
 import time 
 import multiprocessing 
@@ -10,9 +8,11 @@ import pickle
 from functools import partial
 from multiprocessing.pool import ThreadPool
 
+from src.triton import triton_inference_engine
 
 
 def get_flags():
+    # parse the arguments and return them as FLAGS
     parser = argparse.ArgumentParser()
     parser.add_argument('-v',
         '--verbose',
@@ -67,7 +67,7 @@ def get_flags():
     parser.add_argument(
         '--data',
         type=str,
-        required=True,
+        required=False,
         default=None,
         help=
         'Pickle file containing a list of inputs'
@@ -117,22 +117,37 @@ def get_flags():
     return FLAGS
 
 def setup(FLAGS):
+    '''
+        returns an inference engine based on the flags passed as argument
+    '''
     infer_engine = triton_inference_engine.Inference_engine(FLAGS)
 
     return infer_engine
 
 def prepare_requests(FLAGS, data):
+    '''
+        data: list of inputs
+
+        returns a list of list of inputs after spliting the inputs using specified batch size
+
+    '''
     batch_size = FLAGS.b
     requests_data = [data[i * batch_size:(i + 1) * batch_size] for i in range((len(data) + batch_size - 1) // batch_size )]
     return requests_data
 
 def load_data(FLAGS):
+    '''
+        reads data from pickle file 
+    '''
     infile = open(FLAGS.data, 'rb')
     data = pickle.load(infile)
     infile.close()
     return data
 
 def save_data(FLAGS, data):
+    '''
+        saves predictions in the specified path in picke format 
+    '''
     outfile = open(FLAGS.save, "wb")
     pickle.dump(data, outfile)
     outfile.close()
@@ -143,6 +158,14 @@ def send_request(data):
     return infer_engine.run_inference(data) 
 
 def async_infer(engine, requests):
+    '''
+        engine: inference engine 
+        requets: list of requests
+
+        performs the inference using multiprocessing. 
+        
+        returns list of predictions 
+    '''
     global infer_engine 
     infer_engine = engine
     

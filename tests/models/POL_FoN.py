@@ -1,5 +1,3 @@
-#/data/pau_hpda/users/l0477221/fossil_project_output/morpho_pol/learning_data/test/cla/
-
 from cv2 import imread,imwrite
 from cv2 import cvtColor
 from cv2 import COLOR_BGR2RGB

@@ -6,15 +6,6 @@ import multiprocessing
 from src.triton import utils
 
 
-
-def send_request(data):
-    return infer_engine.run_inference(data) 
-
-def toto(requests):
-    with multiprocessing.Pool() as pool:
-        predictions = pool.map(send_request, requests)    
-
-
 if __name__ == '__main__':
     
     FLAGS = utils.get_flags()

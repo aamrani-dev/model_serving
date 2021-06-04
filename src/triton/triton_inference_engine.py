@@ -3,21 +3,36 @@ sys.path.insert(0, '/home/amine/model_serving')
 
 import numpy as np 
 import time
+import importlib
+
 from src.ModelServing import ModelServing
 import tritonclient.http as httpclient
 from tritonclient.utils import InferenceServerException
-import importlib
 
 
 class Inference_engine(ModelServing):
 
 	def __init__(self, FLAGS):
+		'''
+			FLAGS:
+				requiered:
+					model_name: the name of the model to use for inference
+					models_utils:
+					input_tensor_name: name of the model input tensor
+					out_tensor_name: name of the model output tensor
+					output_shape : shape of the model output tensor
+					url: the url where requests will be sent 
+				optional:
+					please refer to the doc for the hole FLAGS options	
+		'''
+
 		self.model_name = FLAGS.model_name
 		self.models_utils = importlib.import_module("models."+self.model_name)
 		self.input_tensor_name = FLAGS.input_tensor_name
 		self.output_tensor_name = FLAGS.output_tensor_name
 		self.output_shape = int(FLAGS.output_shape)
 		try:
+			# We take into account the usage of an SSL communication (for security reasons)
 			if FLAGS.ssl:
 				self.triton_client = httpclient.InferenceServerClient(
 					url=FLAGS.url,
@@ -28,6 +43,7 @@ class Inference_engine(ModelServing):
 			else:
 				self.triton_client = httpclient.InferenceServerClient(
 					url=FLAGS.url, verbose=FLAGS.verbose)
+
 		except Exception as e:
 			print("channel creation failed: " + str(e))
 			sys.exit(1)
@@ -37,7 +53,11 @@ class Inference_engine(ModelServing):
 			return self.models_utils.preprocessing(data)
 		except Exception as e: 
 			print(e)
+
 	def inference(self, data): 
+		'''
+			data: list of model inputs 
+		'''
 		data = data.astype(np.float32)
 		inputs = []
 		try:
