@@ -1,14 +1,17 @@
 import sys
+import os 
+
 sys.path.insert(0, '/home/amine/model_serving')
+sys.path.insert(0, os.environ['MODELS_UTILS'])
 
 import numpy as np 
 import time
 import importlib
 
-from src.ModelServing import ModelServing
+from src.triton.ModelServing import ModelServing
 import tritonclient.http as httpclient
 from tritonclient.utils import InferenceServerException
-
+import torch
 
 class Inference_engine(ModelServing):
 
@@ -58,6 +61,8 @@ class Inference_engine(ModelServing):
 		'''
 			data: list of model inputs 
 		'''
+		# data = data.type(torch.cuda.FloatTensor)
+		# data = data.cpu().numpy()
 		data = data.astype(np.float32)
 		inputs = []
 		try:

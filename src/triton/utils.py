@@ -6,10 +6,12 @@ import time
 import multiprocessing 
 import pickle
 from functools import partial
-from multiprocessing.pool import ThreadPool
+# from multiprocessing.pool import ThreadPool
+from torch import multiprocessing
+# from torch.multiprocessing import Pool, Process, set_start_method
 
+# multiprocessing.set_start_method('spawn', force=True)
 from src.triton import triton_inference_engine
-
 
 def get_flags():
     # parse the arguments and return them as FLAGS
@@ -168,9 +170,10 @@ def async_infer(engine, requests):
     '''
     global infer_engine 
     infer_engine = engine
-    
-    # infer_engine = [infer_engine for i in range(len(requests))]
-    with multiprocessing.Pool() as pool:
+    with multiprocessing.Pool(processes=1) as pool:
         predictions = pool.map(send_request, requests)
     predictions = [pred for batch in predictions for pred in batch]
     return predictions
+    
+
+    # return engine.run_inference(requests[0]) 

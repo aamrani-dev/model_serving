@@ -15,13 +15,11 @@ if __name__ == '__main__':
 	(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 	test_images = test_images.reshape(test_images.shape[0], 28, 28, 1)
 
-	test_images = test_images[:10]
-
 	requests = utils.prepare_requests(FLAGS, test_images)
 
 	predictions = utils.async_infer(infer_engine, requests)
 
 	print(predictions)
 
-	for i in range(10):
+	for i in range(len(predictions)):
 		print( "predicted: ",  predictions[i] ,". Actual : " , test_labels[i])
