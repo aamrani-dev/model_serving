@@ -6,11 +6,8 @@ import time
 import multiprocessing 
 import pickle
 from functools import partial
-# from multiprocessing.pool import ThreadPool
 from torch import multiprocessing
-# from torch.multiprocessing import Pool, Process, set_start_method
 
-# multiprocessing.set_start_method('spawn', force=True)
 from src.triton import triton_inference_engine
 
 def get_flags():

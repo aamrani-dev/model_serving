@@ -1,9 +1,8 @@
 import sys
 import os 
 
-sys.path.insert(0, '/home/amine/model_serving')
-sys.path.insert(0, os.environ['MODELS_UTILS'])
-
+MODEL_RESPOSITORY = os.getenv('MODEL_REPOSITORY')
+print(MODEL_RESPOSITORY)
 import numpy as np 
 import time
 import importlib
@@ -30,7 +29,9 @@ class Inference_engine(ModelServing):
 		'''
 
 		self.model_name = FLAGS.model_name
-		self.models_utils = importlib.import_module("models."+self.model_name)
+		sys.path.insert(0, MODEL_RESPOSITORY+'/'+self.model_name)
+
+		self.models_utils = importlib.import_module(self.model_name)
 		self.input_tensor_name = FLAGS.input_tensor_name
 		self.output_tensor_name = FLAGS.output_tensor_name
 		self.output_shape = int(FLAGS.output_shape)
