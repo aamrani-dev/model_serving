@@ -9,7 +9,7 @@ This project aims to offer a High-Level tool to the user to serve DL models in t
 ## Documentation
 
 
-* [Quick start](docs/quickstart.md.ipynb)
-* [Model Repository](docs/model_repository.md.ipynb)
-* [Preprocessing and postprocessing methods](docs/pre_post_processing.md.ipynb)
-* [utils](docs/utils.md.ipynb)
+* [Quick start](docs/quickstart.md)
+* [Model Repository](docs/model_repository.md)
+* [Preprocessing and postprocessing methods](docs/pre_post_processing.md)
+* [utils](docs/utils.md)

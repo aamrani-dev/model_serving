@@ -62,8 +62,6 @@ class Inference_engine(ModelServing):
 		'''
 			data: list of model inputs 
 		'''
-		# data = data.type(torch.cuda.FloatTensor)
-		# data = data.cpu().numpy()
 		data = data.astype(np.float32)
 		inputs = []
 		try:

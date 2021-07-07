@@ -130,7 +130,7 @@ def prepare_requests(FLAGS, data):
         returns a list of list of inputs after spliting the inputs using specified batch size
 
     '''
-    batch_size = FLAGS.b
+    batch_size = int(FLAGS.b)
     requests_data = [data[i * batch_size:(i + 1) * batch_size] for i in range((len(data) + batch_size - 1) // batch_size )]
     return requests_data
 
@@ -172,5 +172,3 @@ def async_infer(engine, requests):
     predictions = [pred for batch in predictions for pred in batch]
     return predictions
     
-
-    # return engine.run_inference(requests[0]) 
