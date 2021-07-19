@@ -10,7 +10,7 @@ import importlib
 from src.triton.ModelServing import ModelServing
 import tritonclient.http as httpclient
 from tritonclient.utils import InferenceServerException
-import torch
+# import torch
 
 class Inference_engine(ModelServing):
 

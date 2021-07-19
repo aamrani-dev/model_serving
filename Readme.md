@@ -12,4 +12,4 @@ This project aims to offer a High-Level tool to the user to serve DL models in t
 * [Quick start](docs/quickstart.md)
 * [Model Repository](docs/model_repository.md)
 * [Preprocessing and postprocessing methods](docs/pre_post_processing.md)
-* [utils](docs/utils.md)
+* [utils](docs/python_api.md)

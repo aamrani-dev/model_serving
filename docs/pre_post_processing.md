@@ -6,7 +6,7 @@ These two methods must be defined in a file having as the model. This file must 
 
 Bellow is an example of a model's folder architecture: 
 
-![Capture%20d%E2%80%99%C3%A9cran%20de%202021-06-15%2013-59-40.png](attachment:Capture%20d%E2%80%99%C3%A9cran%20de%202021-06-15%2013-59-40.png)
+![pre_post_processing.png](img/pre_post_processing.png)
 
 **mnist.py:**
     
