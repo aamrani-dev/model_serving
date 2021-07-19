@@ -8,7 +8,7 @@ This project aims to offer a High-Level tool to the user to serve DL models in t
 
 
 $ triton start
-![model_ready.png](img/model_ready.png)
+![model_ready.png](./img/model_ready.png)
 
 ## Stop Trtion Inference Server
 $ triton stop
