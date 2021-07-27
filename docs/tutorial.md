@@ -1,6 +1,6 @@
 # Tutorial: depoly the MNIST fashion model 
 
-In this tutorial we will deploy the MNIST fashion model build in TensorFlow. Once the model is deployed, we will use the Python API to load data, prepare them and perform the inferences. 
+In this tutorial we will deploy the MNIST fashion model build in TensorFlow. Once the model is deployed, we will use the Python API to load data, prepare them and perform inferences. 
 
 
 First of all, we create a folder named "mnist" that contains our model, as described in the [model repository](http://localhost:8888/notebooks/docs/model_repository.md). 
