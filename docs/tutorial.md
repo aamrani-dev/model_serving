@@ -2,11 +2,18 @@
 
 In this tutorial we will deploy the MNIST fashion model build in TensorFlow. Once the model is deployed, we will use the Python API to load data, prepare them and perform the inferences. 
 
-First of all, we create a folder named "mnist" that contains out model, as described in the [model repository](http://localhost:8888/notebooks/docs/model_repository.md.ipynb). 
 
-![Capture%20d%E2%80%99%C3%A9cran%20de%202021-06-15%2013-59-40.png](attachment:Capture%20d%E2%80%99%C3%A9cran%20de%202021-06-15%2013-59-40.png)
+First of all, we create a folder named "mnist" that contains our model, as described in the [model repository](http://localhost:8888/notebooks/docs/model_repository.md). 
 
-Second, we create a file in the above folder named "mnist.py", where we will define two methods: preprocessing and postprocessing. 
+![pre_post_processing.png](img/pre_post_processing.png)
+
+Inside the folder **1**, we put the model we want to deploy and all the needed files for that model.
+
+The **config.pbtxt** contains the model configuration that we want to use for this model. Please refer to the [model configuration](https://github.com/triton-inference-server/server/blob/main/docs/model_configuration.md) documentation
+
+![mnist_config.png](img/mnist_config.png)
+
+Second, we create a file in the same folder named "mnist.py", where we will define two methods: preprocessing and postprocessing. 
 
 
 
@@ -27,17 +34,21 @@ def postprocessing(predictions):
 
 ```
 
-Now, we are ready to launch Triton Inference Server using the following command: 
+Well, the model is ready to be served. 
+
+Now, we need to setup the Triton Inference Server and run it using the following command: 
 
 
 ```python
+! source path_to_project/scripts/env_stack.sh
 ! triton start
 ```
 
+    /bin/bash: path_to_project/scripts/env_stack.sh: Aucun fichier ou dossier de ce type
     /bin/bash: triton : commande introuvable
 
 
-Let's verify if the server is running: 
+Let's verify that the server is running: 
 
 
 ```python
@@ -47,7 +58,9 @@ Let's verify if the server is running:
     /bin/bash: triton : commande introuvable
 
 
-As the Triton Inference Server is running, we can start performing inferences. Let's create a file that you name as you like. I chose "test_mnist.py"
+As the Triton Inference Server is now running and the model is deployed , we can start performing inferences.
+
+Let's create a file that you name as you like. We chose "test_mnist.py"
 
 
 
@@ -86,6 +99,6 @@ if __name__ == '__main__':
 		print( "predicted: ",  predictions[i] ,". Actual : " , test_labels[i])
 ```
 
-![Capture%20d%E2%80%99%C3%A9cran%20de%202021-06-15%2018-01-59.png](attachment:Capture%20d%E2%80%99%C3%A9cran%20de%202021-06-15%2018-01-59.png)
+![results.png](img/results.png)
 
 That's it. Now you are ready to deploy your own model! 
