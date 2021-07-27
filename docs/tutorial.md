@@ -44,10 +44,6 @@ Now, we need to setup the Triton Inference Server and run it using the following
 ! triton start
 ```
 
-    /bin/bash: path_to_project/scripts/env_stack.sh: Aucun fichier ou dossier de ce type
-    /bin/bash: triton : commande introuvable
-
-
 Let's verify that the server is running: 
 
 
@@ -55,13 +51,10 @@ Let's verify that the server is running:
 ! triton is_alive
 ```
 
-    /bin/bash: triton : commande introuvable
-
 
 As the Triton Inference Server is now running and the model is deployed , we can start performing inferences.
 
 Let's create a file that you name as you like. We chose "test_mnist.py"
-
 
 
 
@@ -77,7 +70,7 @@ from tensorflow import keras
 
 
 if __name__ == '__main__':
-    # We start by get the FLAGS passed as arguments
+    # We start by getting the FLAGS passed as arguments
 	FLAGS = utils.get_flags()
     
     #We create our inference engine based on the received flags  
