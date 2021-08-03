@@ -1,0 +1,32 @@
+name: "mnist_copy"
+platform: "tensorflow_savedmodel"
+max_batch_size: 128
+
+input [
+  {
+    name: "Conv1_input"
+    data_type: TYPE_FP32
+    dims: [28,28,1]
+  }
+]
+output [
+  {
+    name: "Dense"
+    data_type: TYPE_FP32
+    dims: [ 10 ]
+  }
+]
+dynamic_batching {
+    preferred_batch_size: [ 4, 8, 16]
+    max_queue_delay_microseconds: 2000
+}
+
+
+instance_group [
+   {
+     count: 2
+     kind: KIND_GPU
+     gpus: [ 0 ]
+   }
+]
+

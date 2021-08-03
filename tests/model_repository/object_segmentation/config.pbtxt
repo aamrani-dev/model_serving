@@ -1,0 +1,27 @@
+name: "object_segmentation"
+platform: "tensorflow_savedmodel"
+max_batch_size: 128
+
+input [
+  {
+    name: "InputLayer"
+    data_type: TYPE_FP32
+    dims: [128,128,3]
+  }
+]
+output [
+  {
+    name: "Conv2DTranspose"
+    data_type: TYPE_FP32
+    dims: [128,128,3]
+  }
+]
+
+instance_group [
+   {
+     count: 2
+     kind: KIND_GPU
+     gpus: [ 0 ]
+   }
+]
+

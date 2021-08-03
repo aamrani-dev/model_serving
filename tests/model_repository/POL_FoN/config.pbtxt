@@ -1,0 +1,41 @@
+# Minimal configuration: 
+# name: model name
+# plateform: backend to use
+# input: name, data type and dims
+# output: name, data type and dims
+
+# Optional configurations: 
+# max_batch_size: maximum batch size 
+# version policy: model version that will be deployed
+# instance groups: specify how many model instances to launch on specific GPUs/CPUs
+# Scheduling and batching: algorithm to use to distribute the requests among the model instances
+
+name: "POL_FoN"
+platform: "tensorflow_savedmodel"
+max_batch_size: 128
+
+input [
+  { 
+    name: "input_1"
+    data_type: TYPE_FP32
+    dims: [224,224,3]
+  }
+]
+output [
+  {
+    name: "image_predictions/Softmax"
+    data_type: TYPE_FP32
+    dims: [ 2 ]
+  }
+]
+
+instance_group [
+   {
+     count: 1
+     kind: KIND_GPU
+     gpus: [ 0 ]
+   }
+]
+
+
+
