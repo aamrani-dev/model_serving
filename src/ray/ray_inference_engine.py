@@ -50,10 +50,13 @@ class Inference_engine(ModelServing):
 			else:
 				ray.init()
 				self.client = serve.start()
-			self.client.create_backend(backend_name, deployed_class, args)
-			self.client.create_endpoint(backend_name, backend=backend_name, route="/"+backend_name, methods=["POST"])
-			
-			# self.handler = self.client.get_handle(backend_name)
+			try:
+				self.client.create_backend(backend_name, deployed_class, args)
+				self.client.create_endpoint(backend_name, backend=backend_name, route="/"+backend_name, methods=["POST"])
+			except Exception as e: 
+				print("A model with a same name is already registered. Be sure that there is no conflict")
+
+			# self.handler = 
 			
 		except Exception as e:
 			print("Error: " + str(e))
@@ -62,7 +65,7 @@ class Inference_engine(ModelServing):
 	def run_inference(self, data):
 		results = []
 		for d in data:
-			r  = requests.post("http://127.0.0.1:8000/MNIST", json=d)
+			r  = requests.post("http://127.0.0.1:8000/"+self.backend_name, json=d)
 			results.append(r.text)
 		return results
 

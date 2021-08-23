@@ -22,8 +22,8 @@ from scipy.ndimage import zoom
 
 
 class MNIST(Ray_serving):
-	def __init__(self, model_path):
-		self.model = tf.keras.models.load_model("/home/amine/Desktop/examples/model_repository/mnist/1/model.savedmodel")
+	def __init__(self, args):
+		self.model = tf.keras.models.load_model(args[0])
 
 
 	async def preprocessing(self, data): 

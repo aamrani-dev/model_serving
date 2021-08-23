@@ -10,7 +10,7 @@ from ray import serve
 
 import requests
 
-PATH_TO_MODEL = "/home/amine/Desktop/examples/model_repository/mnist/1/model.savedmodel"
+PATH_TO_MODEL = "/data/appli_PITSI/users/amrani/model_serving/tests/model_repository/mnist/1/model.savedmodel"
 MODEL_NAME = "MNIST"
 
 if __name__ == '__main__':
@@ -24,6 +24,6 @@ if __name__ == '__main__':
 	req = engine.prepare_requests(test_images)
 
 	req = [{"inputs": r.tolist()} for r in req]
-	predictions = engine.run_inference(req)
+	predictions = engine.run_inference(req[:2])
 
 	print(predictions)
