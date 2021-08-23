@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import sys
-sys.path.insert(0, '/home/amine/model_serving')
+import os
+sys.path.insert(0, os.getenv("MODEL_SERVING"))
 from src.ModelServing import ModelServing
 import ray 
 from ray import serve 
