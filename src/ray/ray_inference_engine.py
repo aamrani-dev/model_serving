@@ -45,25 +45,26 @@ class Inference_engine(ModelServing):
 		self.client = None
 		try:
 			if self.FLAGS.long_live:
-				ray.init(address='auto')
+				ray.init(address="auto", namespace="serve")
 				self.client = serve.connect()
 			else:
 				ray.init()
 				self.client = serve.start()
 			self.client.create_backend(backend_name, deployed_class, args)
-			self.client.create_endpoint(backend_name, backend=backend_name, route="/"+backend_name, methods=["POST", "GET"])
-
+			self.client.create_endpoint(backend_name, backend=backend_name, route="/"+backend_name, methods=["POST"])
+			
+			# self.handler = self.client.get_handle(backend_name)
+			
 		except Exception as e:
 			print("Error: " + str(e))
 			sys.exit(1)
 
 	def run_inference(self, data):
-		@ray.remote
-		def send_request(d):
-			return requests.post("http://127.0.0.1:8000/"+backend_name, params=d)
-
-		predictions = ray.get([send_request(d) for d in data])
-		return predictions
+		results = []
+		for d in data:
+			r  = requests.post("http://127.0.0.1:8000/MNIST", json=d)
+			results.append(r.text)
+		return results
 
 	def get_flags(self):
 	    # parse the arguments and return them as FLAGS
@@ -74,4 +75,12 @@ class Inference_engine(ModelServing):
 	        required=False,
 	        default=False,
 	        help='Launch Ray in long live version')
+	    parser.add_argument(
+	        '--b',
+	        type=str,
+	        required=False,
+	        default=4,
+	        help=
+	        'batch size to use. Default: 4'
+	    )	    
 	    self.FLAGS = parser.parse_args()

@@ -25,10 +25,11 @@ class Ray_serving(ABC):
 	@serve.batch(max_batch_size=8, batch_wait_timeout_s=1)
 	async def handler(self, requests):
 		try:
-			print(len(requests))
 			data = await self.extract_data(requests)
-			return self.run_inference(data)
+			predictions = await self.inference(data)
 
+			predictions = await self.postprocessing(predictions)
+			return predictions
 		except Exception as e:
 			return [{"error": str(e)} for _ in requests]		
 

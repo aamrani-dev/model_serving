@@ -21,7 +21,7 @@ class ModelServing(ABC):
 	@abstractmethod
 	def get_flags(self):
 		pass
-
+		
 	def prepare_requests(self, data):
 	    '''
 	        data: list of inputs
