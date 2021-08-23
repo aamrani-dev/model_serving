@@ -1,7 +1,7 @@
 import numpy  as np
 from abc import ABC, abstractmethod
 import sys
-sys.path.insert(0, '/home/amine/model_serving')
+sys.path.insert(0, os.getenv("MODEL_SERVING"))
 import argparse
 import asyncio
 import time 

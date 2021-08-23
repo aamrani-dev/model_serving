@@ -1,6 +1,6 @@
 import os 
 import sys
-sys.path.insert(0, '/home/amine/model_serving')
+sys.path.insert(0, os.getenv("MODEL_SERVING"))
 from src.ray.ray_serving import Ray_serving
 
 import ray
