@@ -1,6 +1,6 @@
 # Python API 
 
-We offer a Python API to use Triton Inference Server. By using this API, you can load your data from a pickle file, create a Triton inference engine, prepare your requests and perform asynchronous inferences.
+We offer a Python API to easily use Triton Inference Server and Ray Serve. By using this API, you can load your data from a pickle file, create a Triton inference engine, prepare your requests and perform asynchronous inferences.
 
 * **load_data**:  read data from a pickle file. 
 * **setup**: read and parse received FLAGS
