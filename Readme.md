@@ -10,4 +10,4 @@ This project aims to offer a High-Level tool to the user to serve DL models in t
 
 * [Triton Inference Server](docs/triton.md)
 * [Ray Serve](docs/ray.md)
-* [API](docs/python_api.md)
+* [Python API](docs/python_api.md)
