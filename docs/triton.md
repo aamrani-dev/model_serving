@@ -17,4 +17,6 @@ $ triton start
 $ triton stop
 ## Check if the server is running 
 
-$ triton is_aliveTHE SERVER IS NOT RUNNING
+$ triton is_alive
+
+THE SERVER IS NOT RUNNING
