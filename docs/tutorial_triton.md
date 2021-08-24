@@ -1,4 +1,4 @@
-# Tutorial: depoly the MNIST fashion model 
+# Tutorial: depoly the MNIST fashion model  using Triton Inference Server
 
 In this tutorial we will deploy the MNIST fashion model build in TensorFlow. Once the model is deployed, we will use the Python API to load data, prepare them and perform inferences. 
 
