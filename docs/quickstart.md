@@ -1,6 +1,6 @@
 # Triton Inference Server 
 
-* [Model Repository](docs/model_repository.md)
+* [Model Repository](model_repository.md)
 * [Preprocessing and postprocessing methods](docs/pre_post_processing.md)
 * [tutorial](docs/tutorial.md)
 
