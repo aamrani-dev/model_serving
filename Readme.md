@@ -9,4 +9,4 @@ This project aims to offer a High-Level tool to the user to serve DL models in t
 ## Documentation
 
 * [Triton Inference Server](docs/triton.md)
-* [Ray Serve](docs/serve.md)
+* [Ray Serve](docs/ray.md)
