@@ -7,7 +7,7 @@ from tests.MNIST import MNIST
 from src.ray.ray_inference_engine import Inference_engine
 import ray 
 from ray import serve
-
+import time
 import requests
 
 PATH_TO_MODEL = "/data/appli_PITSI/users/amrani/model_serving/tests/model_repository/mnist/1/model.savedmodel"
@@ -24,6 +24,8 @@ if __name__ == '__main__':
 	req = engine.prepare_requests(test_images)
 
 	req = [{"inputs": r.tolist()} for r in req]
-	predictions = engine.run_inference(req[:2])
 
-	print(predictions)
+	start = time.time()
+	predictions = engine.run_inference(req)
+	print(time.time()-start)
+	print(len(predictions))

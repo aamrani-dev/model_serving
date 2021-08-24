@@ -22,6 +22,7 @@ from functools import partial
 
 import ray
 from ray import serve 
+from concurrent.futures import ThreadPoolExecutor
 
 import requests  
 
@@ -51,9 +52,11 @@ class Inference_engine(ModelServing):
 				ray.init()
 				self.client = serve.start()
 			try:
-				self.client.create_backend(backend_name, deployed_class, args)
+				backend_config = serve.BackendConfig(num_replicas=self.FLAGS.num_replicas)
+				self.client.create_backend(backend_name, deployed_class, args, config=backend_config)
 				self.client.create_endpoint(backend_name, backend=backend_name, route="/"+backend_name, methods=["POST"])
-			except Exception as e: 
+			except Exception as e:
+				print(e) 
 				print("A model with a same name is already registered. Be sure that there is no conflict")
 
 			# self.handler = 
@@ -62,12 +65,15 @@ class Inference_engine(ModelServing):
 			print("Error: " + str(e))
 			sys.exit(1)
 
+	def __send_request(self,inputs):
+			r  = requests.post("http://127.0.0.1:8000/"+self.backend_name, json=inputs)
+			return r.text
+
 	def run_inference(self, data):
-		results = []
-		for d in data:
-			r  = requests.post("http://127.0.0.1:8000/"+self.backend_name, json=d)
-			results.append(r.text)
-		return results
+		data = data[:int(3000/self.FLAGS.b)]
+		with ThreadPoolExecutor(max_workers = 3) as executor:
+			results = executor.map(self.__send_request, data)
+		return [r for r in results]
 
 	def get_flags(self):
 	    # parse the arguments and return them as FLAGS
@@ -80,10 +86,18 @@ class Inference_engine(ModelServing):
 	        help='Launch Ray in long live version')
 	    parser.add_argument(
 	        '--b',
-	        type=str,
+	        type=int,
 	        required=False,
 	        default=4,
 	        help=
 	        'batch size to use. Default: 4'
-	    )	    
+	    )	
+	    parser.add_argument(
+	        '--num_replicas',
+	        type=int,
+	        required=False,
+	        default=4,
+	        help=
+	        'number of replicas (workers)'
+	    )		        
 	    self.FLAGS = parser.parse_args()
