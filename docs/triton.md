@@ -2,7 +2,7 @@
 
 * [Model Repository](model_repository.md)
 * [Preprocessing and postprocessing methods](pre_post_processing.md)
-* [tutorial](tutorial_triton.md)
+* [Tutorial](tutorial_triton.md)
 
 
 ## Start Triton Inferencer Server
